@@ -1,12 +1,13 @@
 require('dotenv').config()
 const express = require('express')
 const authRoute = express.Router()
+const jwt = require('jsonwebtoken')
 
 const jwt_secret = process.env.JWT_SECRET
 
 authRoute.post('/signup', async (req, res) => {
     const { username, password } = req.body
-    const founduser = await userModel.findOne({ username, password })
+    const founduser = await userModel.findOne({ username })
     if(!founduser){
         const newUser = new userModel({
             username,
