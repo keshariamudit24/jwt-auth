@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-hot-toast'
 
 export default function SignUp({ setIsSignedIn, setUsername }) {
   const [formData, setFormData] = useState({ username: '', password: '' })
@@ -11,15 +12,16 @@ export default function SignUp({ setIsSignedIn, setUsername }) {
     try {
       const response = await axios.post('http://localhost:3000/auth/signup', formData)
       if(response.data.msg === "successfully signed up") {
+        toast.success('Successfully signed up!')
         setUsername(formData.username)
         setIsSignedIn(true)
         navigate('/')
       }
       else {
-        // toast: user already exists, please sign in
-        console.log("user already exists")
+        toast.error(response.data.msg)
       }
     } catch (error) {
+      toast.error('Failed to sign up. Please try again.')
       console.error('Signup error:', error)
     }
   }

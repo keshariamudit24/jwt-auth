@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 export default function SignIn({ setIsSignedIn, setUsername }) {
   const [formData, setFormData] = useState({ username: '', password: '' })
@@ -12,11 +13,14 @@ export default function SignIn({ setIsSignedIn, setUsername }) {
       const response = await axios.post('http://localhost:3000/auth/signin', formData)
       if(response.data.token) {
         localStorage.setItem('token', response.data.token)
+        localStorage.setItem('username', response.data.username)
+        toast.success('Successfully signed in!')
         setUsername(formData.username)
         setIsSignedIn(true)
         navigate('/')
       }
     } catch (error) {
+      toast.error('Sign in failed. Please check your credentials.')
       console.error('Signin error:', error)
     }
   }

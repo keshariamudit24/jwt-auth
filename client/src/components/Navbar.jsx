@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 export default function Navbar({ isSignedIn, username, onLogout }) {
+  const handleLogoutClick = () => {
+    onLogout();
+    toast.success('Successfully logged out!');
+  };
 
   return (
     <nav className="bg-white shadow-lg">
@@ -18,7 +23,7 @@ export default function Navbar({ isSignedIn, username, onLogout }) {
               <div className="flex items-center space-x-4">
                 <span className="text-gray-800">Hello, {username}</span>
                 <button 
-                  onClick={onLogout}
+                  onClick={handleLogoutClick}
                   className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                 >
                   Logout

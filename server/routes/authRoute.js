@@ -31,7 +31,8 @@ authRoute.post('/signin', async (req, res) => {
         }, jwt_secret)
         res.status(200).send({
             msg: "successfully signedin",
-            token: token
+            token: token,
+            username: username
         })
     }
     else{
