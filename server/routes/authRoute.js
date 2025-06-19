@@ -9,6 +9,7 @@ const jwt_secret = process.env.JWT_SECRET
 authRoute.post('/signup', async (req, res) => {
     const { username, password } = req.body
     const founduser = await userModel.findOne({ username })
+    console.log("user : ", founduser)
     if(!founduser){
         const newUser = new userModel({
             username,

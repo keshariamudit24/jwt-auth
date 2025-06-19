@@ -15,6 +15,10 @@ export default function SignUp({ setIsSignedIn, setUsername }) {
         setIsSignedIn(true)
         navigate('/')
       }
+      else {
+        // toast: user already exists, please sign in
+        console.log("user already exists")
+      }
     } catch (error) {
       console.error('Signup error:', error)
     }
