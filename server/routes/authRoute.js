@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const authRoute = express.Router()
 const jwt = require('jsonwebtoken')
+const userModel = require('../schemas/userSchema')
 
 const jwt_secret = process.env.JWT_SECRET
 
@@ -33,7 +34,7 @@ authRoute.post('/signin', async (req, res) => {
         })
     }
     else{
-        res.status(404).send({ msg: "invalid credentials" })
+        res.status(404).send({ msg: "you need to sign up first" })
     }
 })
 

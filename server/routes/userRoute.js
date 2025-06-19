@@ -1,14 +1,16 @@
 require('dotenv').config()
 const express = require('express')
+const userModel = require('../schemas/userSchema')
 const userRoute = express.Router()
 const jwt = require('jsonwebtoken')
 
 const jwt_secret = process.env.JWT_SECRET
 
 function auth(req, res, next){
-    const { token } = req.body
+    const  token  = req.headers.token
     const decodedData = jwt.verify(token, jwt_secret)
     if(decodedData){
+        req.username= decodedData.username
         next()
     }
     else {
@@ -16,10 +18,11 @@ function auth(req, res, next){
     }
 }
 
-userRoute.post('/me', async (req, res) => {
-    const { token } = req.body
-    const decodedInfo = jwt.verify( token, jwt_secret) // { username: "mudit" }
-    const username = decodedInfo.username
+// using auth middleware 
+userRoute.get('/me', auth, async (req, res) => {
+    // const token  = req.headers.token
+    // const decodedInfo = jwt.verify( token, jwt_secret) // { username: "mudit" }
+    const username = req.username 
     const user = await userModel.findOne({ username })
     res.json({
         username,
