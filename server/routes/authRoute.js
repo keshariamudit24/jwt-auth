@@ -34,7 +34,7 @@ authRoute.post('/signin', async (req, res) => {
     const founduser = await userModel.findOne({ username })
     if(founduser){
 
-        const passwordMatch = bcrypt.compare(password, founduser.password)
+        const passwordMatch = await bcrypt.compare(password, founduser.password)
 
         if(passwordMatch){
 

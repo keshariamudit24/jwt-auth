@@ -22,7 +22,7 @@ function App() {
 
   function handleLogout() {
     localStorage.removeItem('token');
-    // localStorage.removeItem('username');
+    localStorage.removeItem('username');
     setIsSignedIn(false);
     setUsername('');
   }
